@@ -46,13 +46,11 @@ fn main() {
     let mut x = 1 as isize;  // Cambiado a isize
     let mut speed = 1 as isize;  // Cambiado a isize
 
-    let mut points: Vec<[isize; 2]> = vec![
+    let points: Vec<[isize; 2]> = vec![
         [100, 100],
         [400, 500],
         [700, 300],
     ];
-
-    initialPoints(&mut fb, &points);
 
     while window.is_open() {
         if window.is_key_down(Key::Escape) {

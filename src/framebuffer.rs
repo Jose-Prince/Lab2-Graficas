@@ -62,7 +62,6 @@ impl Framebuffer {
         write_bmp_file(file_path, &self.buffer, self.width, self.height)
     }
 
-    // Método para rellenar polígonos usando el algoritmo de Scanline
     pub fn fill_polygon(&mut self, vertices: &Vec<[isize; 2]>, fill_color: Color) {
         let min_y = vertices.iter().map(|v| v[1]).min().unwrap_or(0);
         let max_y = vertices.iter().map(|v| v[1]).max().unwrap_or(0);
@@ -88,6 +87,20 @@ impl Framebuffer {
                     }
                 }
             }
+        }
+    }
+
+    pub fn get_state(&self) -> Vec<bool> {
+        self.buffer.iter().map(|&color| color != self.background_color.to_hex()).collect()
+    }
+
+    pub fn update_buffer(&mut self, new_state: &[bool]) {
+        for (i, &alive) in new_state.iter().enumerate() {
+            self.buffer[i] = if alive {
+                self.current_color.to_hex()
+            } else {
+                self.background_color.to_hex()
+            };
         }
     }
 }
